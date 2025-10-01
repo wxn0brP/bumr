@@ -14,11 +14,11 @@ A simple tool for updating your project dependencies to their latest versions. B
 ## 🚀 Installation
 
 ```bash
-yarn add github:wxn0brp/bumr
+yarn global add github:wxn0brp/bumr
 ```
 OR
 ```bash
-bun add github:wxn0brp/bumr
+bun add -g github:wxn0brp/bumr
 ```
 
 ## 💡 Usage
