@@ -4,6 +4,22 @@ import { getLatestVersion } from "./api";
 import { options } from ".";
 import { execSync } from "child_process";
 
+const skipArray = [
+    "latest",
+    "*",
+    "file",
+    "git",
+    "http",
+    "https",
+    "workspace",
+    "link",
+    "npm",
+    "x",
+    "X",
+];
+
+const skip = (s: string) => skipArray.some(v => s.includes(v));
+
 export async function upgradeDeps(opts: typeof options) {
     const json = JSON.parse(await readFile("package.json", "utf-8"));
     if (!json) throw new Error("package.json not found");
@@ -20,7 +36,8 @@ export async function upgradeDeps(opts: typeof options) {
 
         for (const [pkg, currentVersion] of Object.entries(deps)) {
             try {
-                if (["latest", "*"].includes(currentVersion)) continue;
+                if (skip(currentVersion)) continue;
+
                 const latest = await getLatestVersion(pkg);
                 const currentClean = currentVersion.replace(/^[\^~>=]+/, "").split(/\s/)[0];
 
