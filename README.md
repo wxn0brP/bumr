@@ -63,6 +63,11 @@ bumr -i false
 # or
 bumr --no-install
 
+# Ignore specific packages
+bumr -x react,react-dom
+# or
+echo "react\nreact-dom" >> bumr.ignore
+
 # Show help
 bumr -h
 # or
@@ -79,6 +84,7 @@ bumr --help
 | `-n` | `--dry-run` | Preview changes without making updates |
 | `-i` | `--install` | Install dependencies after update (default: true) |
 | `-c` | `--command` | Package manager command to use (default: yarn) |
+| `-x` | `--ignore` | Ignore specific packages |
 | `-h` | `--help` | Show help information |
 
 ## 🛠️ Requirements

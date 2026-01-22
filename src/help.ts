@@ -12,6 +12,7 @@ Options:
 -n, --dry-run    Dry run
 -i, --install    Install dependencies (default: true)
 -c, --command    Install command (default: yarn)
+-x, --ignore     Ignore
 -h, --help       Show this help
 
 Default: Update all dependency types

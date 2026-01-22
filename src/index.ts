@@ -13,6 +13,7 @@ const { values } = parseArgs({
         help: { type: "boolean", short: "h" },
         install: { type: "boolean", short: "i" },
         command: { type: "string", short: "c" },
+        ignore: { type: "string", short: "x" },
     }
 });
 
@@ -25,7 +26,9 @@ export const options = {
     dryRun: values.dryRun || false,
     install: values.install || true,
     command: values.command || "yarn",
+    ignore: values.ignore && values.ignore.split(","),
 };
+options.ignore ||= [];
 
 if (values.required || values.dev || values.peer) {
     options.dependencies = values.required;

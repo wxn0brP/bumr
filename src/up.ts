@@ -3,6 +3,7 @@ import { readFile, writeFile } from "fs/promises";
 import { getLatestVersion } from "./api";
 import { options } from ".";
 import { execSync } from "child_process";
+import { existsSync } from "fs";
 
 const skipArray = [
     "latest",
@@ -19,11 +20,16 @@ const skipArray = [
 ];
 
 const skip = (s: string) => skipArray.some(v => s.includes(v));
+const ignoreFile = "bumr.ignore";
 
 export async function upgradeDeps(opts: typeof options) {
     const json = JSON.parse(await readFile("package.json", "utf-8"));
     if (!json) throw new Error("package.json not found");
     let updatedCount = 0;
+
+    if (!opts.ignore.length && existsSync(ignoreFile)) {
+        opts.ignore = (await readFile(ignoreFile, "utf-8")).split("\n").map(v => v.trim()).filter(Boolean);
+    }
 
     const depsToUpdate = [];
     if (opts.dependencies && json.dependencies) depsToUpdate.push(["dependencies", json.dependencies]);
@@ -36,6 +42,7 @@ export async function upgradeDeps(opts: typeof options) {
 
         for (const [pkg, currentVersion] of Object.entries(deps)) {
             try {
+                if (opts.ignore.includes(pkg)) continue;
                 if (skip(currentVersion)) continue;
 
                 const latest = await getLatestVersion(pkg);
