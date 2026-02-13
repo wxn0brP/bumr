@@ -73,7 +73,7 @@ export async function upgradeDeps(opts: typeof options) {
         return;
     }
 
-    await writeFile("package.json", JSON.stringify(json, null, 4));
+    await writeFile("package.json", JSON.stringify(json, null, 4) + "\n");
     console.log(`🎉 Updated ${updatedCount} packages`);
 
     if (!opts.install) return;
