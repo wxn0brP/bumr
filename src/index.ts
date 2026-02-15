@@ -25,7 +25,7 @@ export const options = {
     peerDependencies: !values.required && !values.dev,
     dryRun: values.dryRun || false,
     install: values.install || true,
-    command: values.command || "yarn",
+    command: values.command || "bun i",
     ignore: values.ignore && values.ignore.split(","),
 };
 options.ignore ||= [];

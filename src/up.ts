@@ -50,8 +50,11 @@ export async function upgradeDeps(opts: typeof options) {
 
                 if (currentClean !== latest) {
                     const prefixMatch = currentVersion.match(/^[\^~>=]+/);
-                    const prefix = prefixMatch?.[0]?.startsWith('>') ? prefixMatch[0] : (prefixMatch?.[0] || "^");
+
+                    const prefix = prefixMatch?.[0]?.startsWith(">") ? prefixMatch[0] : (prefixMatch?.[0] || "~");
                     deps[pkg] = `${prefix}${latest}`;
+
+
                     console.log(`   ${pkg}: ${currentClean} -> ${latest}`);
                     updatedCount++;
                 } else {
@@ -64,7 +67,8 @@ export async function upgradeDeps(opts: typeof options) {
         console.log();
     }
 
-    if (!updatedCount) return console.log("✅ All packages are up to date!");
+    if (!updatedCount)
+        return console.log("✅ All packages are up to date!");
 
     if (options.dryRun) {
         console.log("📦 Dry run enabled. Ignore Changes.");
