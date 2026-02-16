@@ -1,9 +1,9 @@
 
-import { readFile, writeFile } from "fs/promises";
-import { getLatestVersion } from "./api";
-import { options } from ".";
-import { execSync } from "child_process";
+import { spawnSync } from "child_process";
 import { existsSync } from "fs";
+import { readFile, writeFile } from "fs/promises";
+import { options } from ".";
+import { getLatestVersion } from "./api";
 
 const skipArray = [
     "latest",
@@ -82,8 +82,8 @@ export async function upgradeDeps(opts: typeof options) {
 
     if (!opts.install) return;
     console.log("📥 Installing...");
-    execSync(`${options.command}`, {
+    spawnSync(options.command, {
         stdio: "inherit",
-        shell: "bash",
+        shell: true,
     });
 }
