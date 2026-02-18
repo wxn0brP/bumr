@@ -4,31 +4,24 @@ import { existsSync } from "fs";
 import { readFile, writeFile } from "fs/promises";
 import { options } from ".";
 import { getLatestVersion } from "./api";
-
-const skipArray = [
-    "latest",
-    "*",
-    "file",
-    "git",
-    "http",
-    "https",
-    "workspace",
-    "link",
-    "npm",
-    "x",
-    "X",
-];
+import { ignoreFile, skipArray } from "./vars";
 
 const skip = (s: string) => skipArray.some(v => s.includes(v));
-const ignoreFile = "bumr.ignore";
+
+async function loadIgnore() {
+    if (!existsSync(ignoreFile)) return [];
+    const content = await readFile(ignoreFile, "utf-8");
+    return content.split("\n").map(v => v.trim()).filter(Boolean);
+}
 
 export async function upgradeDeps(opts: typeof options) {
     const json = JSON.parse(await readFile("package.json", "utf-8"));
     if (!json) throw new Error("package.json not found");
     let updatedCount = 0;
 
-    if (!opts.ignore.length && existsSync(ignoreFile)) {
-        opts.ignore = (await readFile(ignoreFile, "utf-8")).split("\n").map(v => v.trim()).filter(Boolean);
+    if (!opts.ignore.length || opts.ignore.includes("file")) {
+        const ignore = await loadIgnore();
+        opts.ignore = opts.ignore.concat(ignore);
     }
 
     const depsToUpdate = [];

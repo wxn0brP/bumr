@@ -11,8 +11,8 @@ Options:
 -p, --peer       Update peerDependencies only
 -n, --dry-run    Dry run
 -i, --install    Install dependencies (default: true)
--c, --command    Install command (default: yarn)
--x, --ignore     Ignore
+-c, --command    Install command (default: bun i)
+-x, --ignore     Ignore packages. If not provided or includes "file", loads entries from bumr.ignore.
 -h, --help       Show this help
 
 Default: Update all dependency types
