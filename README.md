@@ -9,16 +9,18 @@ A simple tool for updating your project dependencies to their latest versions. B
 - Dry-run mode to preview changes before applying
 - Automatic installation after updates
 - Compatible with npm, yarn, and bun
-- Preserves version ranges (keeps ^ and ~ prefixes)
+- Preserves version ranges (keeps ^, ~, >=, etc)
 
 ## 🚀 Installation
 
 ```bash
-yarn global add github:wxn0brp/bumr
-```
-OR
-```bash
 bun add -g github:wxn0brp/bumr
+```
+
+or ingr via [dotfiles](https://github.com/wxn0brP/dotfiles):
+
+```bash
+ingr bumr
 ```
 
 ## 💡 Usage
@@ -53,7 +55,7 @@ bumr -n
 # or
 bumr --dry-run
 
-# Use a specific package manager (default: yarn)
+# Use a specific package manager (default: bun i)
 bumr -c npm
 # or
 bumr --command npm
@@ -83,13 +85,18 @@ bumr --help
 | `-p` | `--peer` | Update peerDependencies only |
 | `-n` | `--dry-run` | Preview changes without making updates |
 | `-i` | `--install` | Install dependencies after update (default: true) |
-| `-c` | `--command` | Package manager command to use (default: yarn) |
-| `-x` | `--ignore` | Ignore specific packages |
+| `-c` | `--command` | Package manager command to use (default: bun i) |
+| `-x` | `--ignore` | Ignore specific packages (comma-separated, use "file" to assign from ignore file) |
 | `-h` | `--help` | Show help information |
+
+## bumr.ignore file
+
+Consists of a list of package names to ignore during updates.
+If not provided or includes "file", loads entries from `bumr.ignore` (newline-separated).
 
 ## 🛠️ Requirements
 
-- [Bun](https://bun.sh/) runtime (recommended)
+- [Bun](https://bun.sh/) runtime
 - A `package.json` file in your project
 
 ## 🤝 Contributing
