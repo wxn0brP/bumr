@@ -14,6 +14,16 @@ async function loadIgnore() {
     return content.split("\n").map(v => v.trim()).filter(Boolean);
 }
 
+function convertVersionToSameLength(len: string, ver: string) {
+    const aLen = len.split(".").length;
+    const splitB = ver.split(".");
+    let target = [];
+    for (let i = 0; i < aLen; i++) {
+        target.push(splitB[i]);
+    }
+    return target.join(".");
+}
+
 export async function upgradeDeps(opts: typeof options) {
     const json = JSON.parse(await readFile("package.json", "utf-8"));
     if (!json) throw new Error("package.json not found");
@@ -39,16 +49,16 @@ export async function upgradeDeps(opts: typeof options) {
                 if (skip(currentVersion)) continue;
 
                 const latest = await getLatestVersion(pkg);
+                const latestStandard = convertVersionToSameLength(currentVersion, latest);
                 const currentClean = currentVersion.replace(/^[\^~>=]+/, "").split(/\s/)[0];
 
-                if (currentClean !== latest) {
+                if (latestStandard !== currentClean) {
                     const prefixMatch = currentVersion.match(/^[\^~>=]+/);
 
                     const prefix = prefixMatch?.[0]?.startsWith(">") ? prefixMatch[0] : (prefixMatch?.[0] || "~");
-                    deps[pkg] = `${prefix}${latest}`;
+                    deps[pkg] = `${prefix}${latestStandard}`;
 
-
-                    console.log(`   ${pkg}: ${currentClean} -> ${latest}`);
+                    console.log(`   ${pkg}: ${currentClean} -> ${latestStandard}`);
                     updatedCount++;
                 } else {
                     console.log(`   ${pkg} ${currentClean} (up to date)`);
