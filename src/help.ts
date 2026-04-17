@@ -3,7 +3,7 @@ export function help() {
 BUMR - Update dependencies to latest versions
 
 Usage:
-${process.argv[0]} [options]
+bumr [options]
 
 Options:
 -r, --required   Update dependencies only
@@ -17,6 +17,6 @@ Options:
 -v, --version    Show version
 
 Default: Update all dependency types
-    `);
+`);
     process.exit(0);
 }
