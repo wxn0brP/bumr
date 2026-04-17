@@ -14,10 +14,16 @@ const { values } = parseArgs({
         install: { type: "boolean", short: "i" },
         command: { type: "string", short: "c" },
         ignore: { type: "string", short: "x" },
+        version: { type: "boolean", short: "v" },
     }
 });
 
 if (values.help) help();
+
+if (values.version) {
+    console.log(require("../package.json").version);
+    process.exit(0);
+}
 
 export const options = {
     dependencies: !values.dev && !values.peer,
