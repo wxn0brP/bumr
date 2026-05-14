@@ -15,12 +15,12 @@ async function loadIgnore() {
 }
 
 function convertVersionToSameLength(len: string, ver: string) {
-    const aLen = len.split(".").length;
+    const cleanLen = len.replace(/^[\^~>=]+/, "").split("-")[0];
+    const aLen = cleanLen.split(".").length;
     const splitB = ver.split(".");
-    let target = [];
-    for (let i = 0; i < aLen; i++) {
+    const target = [];
+    for (let i = 0; i < aLen; i++)
         target.push(splitB[i]);
-    }
     return target.join(".");
 }
 
