@@ -52,7 +52,7 @@ export async function upgradeDeps(opts: typeof options) {
                 const latestStandard = convertVersionToSameLength(currentVersion, latest);
                 const currentClean = currentVersion.replace(/^[\^~>=]+/, "").split(/\s/)[0];
 
-                if (latestStandard !== currentClean) {
+                if (Bun.semver.order(latestStandard, currentClean) > 0) {
                     const prefixMatch = currentVersion.match(/^[\^~>=]+/);
 
                     const prefix = prefixMatch?.[0]?.startsWith(">") ? prefixMatch[0] : (prefixMatch?.[0] || "~");
