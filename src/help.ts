@@ -1,5 +1,5 @@
 export function help() {
-    console.log(`
+	console.log(`
 BUMR - Update dependencies to latest versions
 
 Usage:
@@ -18,5 +18,5 @@ Options:
 
 Default: Update all dependency types
 `);
-    process.exit(0);
+	process.exit(0);
 }
