@@ -1,6 +1,6 @@
 {
 	"name": "bumr",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"main": "src/index.ts",
 	"description": "",
 	"repository": {
@@ -20,6 +20,6 @@
 	"devDependencies": {
 		"@types/bun": "*",
 		"@wxn0brp/biome": "*",
-		"typescript": "^6"
+		"typescript": "^7"
 	}
 }
