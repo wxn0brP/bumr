@@ -61,11 +61,16 @@ export async function upgradeDeps(opts: typeof options) {
 				if (opts.ignore.includes(pkg)) continue;
 				if (skip(currentVersion)) continue;
 
-				const latest = await getLatestVersion(pkg);
-				const latestStandard = convertVersionToSameLength(
-					currentVersion,
-					latest,
-				);
+				let tag = "latest";
+				if (opts.alpha && opts.alpha.includes(pkg)) tag = "alpha";
+				if (opts.beta && opts.beta.includes(pkg)) tag = "beta";
+
+				const latest = await getLatestVersion(pkg, tag);
+				const latestStandard =
+					tag === "latest"
+						? convertVersionToSameLength(currentVersion, latest)
+						: latest;
+
 				const currentClean = currentVersion
 					.replace(/^[\^~>=]+/, "")
 					.split(/\s/)[0];

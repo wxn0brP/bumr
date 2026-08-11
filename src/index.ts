@@ -38,6 +38,14 @@ const { values } = parseArgs({
 			type: "string",
 			short: "x",
 		},
+		alpha: {
+			type: "string",
+			short: "a",
+		},
+		beta: {
+			type: "string",
+			short: "b",
+		},
 		version: {
 			type: "boolean",
 			short: "v",
@@ -60,8 +68,12 @@ export const options = {
 	install: values.install || true,
 	command: values.command || "bun i",
 	ignore: values.ignore && values.ignore.split(","),
+	alpha: values.alpha && values.alpha.split(","),
+	beta: values.beta && values.beta.split(","),
 };
 options.ignore ||= [];
+options.alpha ||= [];
+options.beta ||= [];
 
 if (values.required || values.dev || values.peer) {
 	options.dependencies = values.required;

@@ -13,6 +13,8 @@ Options:
 -i, --install    Install dependencies (default: true)
 -c, --command    Install command (default: bun i)
 -x, --ignore     Ignore packages. If not provided or includes "file", loads entries from bumr.ignore.
+-a, --alpha      Use alpha versions for specific packages (comma-separated)
+-b, --beta       Use beta versions for specific packages (comma-separated)
 -h, --help       Show this help
 -v, --version    Show version
 
