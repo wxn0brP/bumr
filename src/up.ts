@@ -80,7 +80,7 @@ export async function upgradeDeps(opts: typeof options) {
 
 					const prefix = prefixMatch?.[0]?.startsWith(">")
 						? prefixMatch[0]
-						: prefixMatch?.[0] || "~";
+						: prefixMatch?.[0] || "";
 					deps[pkg] = `${prefix}${latestStandard}`;
 
 					console.log(`   ${pkg}: ${currentClean} -> ${latestStandard}`);
