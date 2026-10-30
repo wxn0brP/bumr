@@ -38,6 +38,10 @@ const { values } = parseArgs({
 			type: "string",
 			short: "x",
 		},
+		only: {
+			type: "string",
+			short: "o",
+		},
 		alpha: {
 			type: "string",
 			short: "a",
@@ -68,10 +72,12 @@ export const options = {
 	install: values.install || true,
 	command: values.command || "bun i",
 	ignore: values.ignore && values.ignore.split(","),
+	only: values.only && values.only.split(","),
 	alpha: values.alpha && values.alpha.split(","),
 	beta: values.beta && values.beta.split(","),
 };
 options.ignore ||= [];
+options.only ||= [];
 options.alpha ||= [];
 options.beta ||= [];
 

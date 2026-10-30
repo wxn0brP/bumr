@@ -1,38 +1,36 @@
 # bumr
 
-A simple tool for updating your project dependencies to their latest versions. Bumr automatically scans your `package.json` and updates dependencies to their latest compatible versions, then installs them using your preferred package manager.
+bumr updates the dependencies in your `package.json` to their latest versions, keeps the range prefix you already use, and runs the install command afterward.
 
-## ✨ Features
+## Features
 
-- Updates dependencies to latest compatible versions
-- Supports dependencies, devDependencies, and peerDependencies
-- Dry-run mode to preview changes before applying
-- Automatic installation after updates
-- Compatible with npm, yarn, and bun
-- Preserves version ranges (keeps ^, ~, >=, etc)
+- Handles dependencies, devDependencies, and peerDependencies
+- Keeps version ranges such as `^`, `~`, and `>=`
+- `--dry-run` prints the new `package.json` without writing it
+- Installs with bun by default, or with any command passed to `--command`
+- Skips packages listed in `bumr.ignore` or passed to `--ignore`
 
-## 🚀 Installation
+## Installation
 
 ```bash
 bun add -g github:wxn0brp/bumr
 ```
 
-or ingr via [dotfiles](https://github.com/wxn0brP/dotfiles):
+Or through ingr, from [dotfiles](https://github.com/wxn0brP/dotfiles):
 
 ```bash
 ingr bumr
 ```
 
-## 💡 Usage
+## Usage
 
-### Basic Usage
-Simply run `bumr` in your project directory to update all dependencies:
+Run `bumr` in a project directory to update every dependency:
 
 ```bash
 bumr
 ```
 
-### Advanced Options
+### Options
 
 ```bash
 # Update only production dependencies
@@ -50,25 +48,28 @@ bumr -p
 # or
 bumr --peer
 
-# Dry run to see what would be updated without making changes
+# Preview the changes without writing them
 bumr -n
 # or
 bumr --dry-run
 
-# Use a specific package manager (default: bun i)
+# Use a different install command (default: bun i)
 bumr -c npm
 # or
 bumr --command npm
 
-# Skip installation after updating
+# Skip the install step
 bumr -i false
-# or
-bumr --no-install
 
 # Ignore specific packages
 bumr -x react,react-dom
+# or write them to the ignore file
+printf 'react\nreact-dom\n' >> bumr.ignore
+
+# Update only specific packages
+bumr -o react,react-dom
 # or
-echo "react\nreact-dom" >> bumr.ignore
+bumr --only react,react-dom
 
 # Show help
 bumr -h
@@ -76,33 +77,28 @@ bumr -h
 bumr --help
 ```
 
-### All Available Options
+### Option reference
 
 | Short | Long | Description |
 |-------|------|-------------|
 | `-r` | `--required` | Update production dependencies only |
 | `-d` | `--dev` | Update devDependencies only |
 | `-p` | `--peer` | Update peerDependencies only |
-| `-n` | `--dry-run` | Preview changes without making updates |
-| `-i` | `--install` | Install dependencies after update (default: true) |
-| `-c` | `--command` | Package manager command to use (default: bun i) |
-| `-x` | `--ignore` | Ignore specific packages (comma-separated, use "file" to assign from ignore file) |
-| `-h` | `--help` | Show help information |
+| `-n` | `--dry-run` | Print the updated `package.json` instead of writing it |
+| `-i` | `--install` | Install after updating (default: true) |
+| `-c` | `--command` | Install command (default: `bun i`) |
+| `-x` | `--ignore` | Packages to skip, comma-separated; pass `file` to read `bumr.ignore` |
+| `-o` | `--only` | Update only these packages, comma-separated |
+| `-h` | `--help` | Show help |
 
-## bumr.ignore file
+## bumr.ignore
 
-Consists of a list of package names to ignore during updates.
-If not provided or includes "file", loads entries from `bumr.ignore` (newline-separated).
+One package name per line. bumr reads this file when `--ignore` is missing or contains `file`.
 
-## 🛠️ Requirements
+## Contributing
 
-- [Bun](https://bun.sh/) runtime
-- A `package.json` file in your project
+Open an issue or send a pull request.
 
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to submit issues and pull requests.
-
-## 📄 License
+## License
 
 MIT

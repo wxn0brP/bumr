@@ -58,6 +58,7 @@ export async function upgradeDeps(opts: typeof options) {
 
 		for (const [pkg, currentVersion] of Object.entries(deps)) {
 			try {
+				if (opts.only.length && !opts.only.includes(pkg)) continue;
 				if (opts.ignore.includes(pkg)) {
 					console.log(`   ${pkg}: ${currentVersion} (skipped)`);
 					continue;
